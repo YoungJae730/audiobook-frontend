@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, use } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Header } from "@/components/header"
@@ -11,7 +11,8 @@ import { Slider } from "@/components/ui/slider"
 import { Badge } from "@/components/ui/badge"
 import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, ChevronLeft, Star, Clock, BookOpen } from "lucide-react"
 
-export default function AudiobookDetailPage({ params }: { params: { id: string } }) {
+export default function AudiobookDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(289) // 4:49 in seconds
@@ -33,7 +34,7 @@ export default function AudiobookDetailPage({ params }: { params: { id: string }
 
   // Sample book data
   const book = {
-    id: params.id,
+    id: id,
     title: "사피엔스",
     subtitle: "유인원에서 사이보그까지, 인간 역사의 대담한 역사",
     author: "유발 하라리",
