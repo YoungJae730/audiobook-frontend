@@ -67,10 +67,12 @@ export function Header() {
 
         <div className="hidden md:flex items-center space-x-4">
           <ModeToggle />
-          <Button variant="outline" size="sm">
-            로그인
+          <Button variant="outline" size="sm" asChild>
+            <Link href="/auth/login">로그인</Link>
           </Button>
-          <Button size="sm">회원가입</Button>
+          <Button size="sm" asChild>
+            <Link href="/auth/signup">회원가입</Link>
+          </Button>
         </div>
 
         {/* Mobile menu button */}
@@ -106,10 +108,12 @@ export function Header() {
               </Link>
             ))}
             <div className="pt-4 flex flex-col space-y-2">
-              <Button variant="outline" className="justify-center w-full">
-                로그인
+              <Button variant="outline" className="justify-center w-full" asChild>
+                <Link href="/auth/login">로그인</Link>
               </Button>
-              <Button className="justify-center w-full">회원가입</Button>
+              <Button className="justify-center w-full" asChild>
+                <Link href="/auth/signup">회원가입</Link>
+              </Button>
             </div>
           </div>
         </div>

@@ -3,7 +3,8 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FileUp, FileText, Clock, Download, Trash2 } from "lucide-react"
+import { FileUp, FileText, Clock, Download, Trash2, Play } from "lucide-react"
+import Link from "next/link"
 
 export default function DocumentSummaryPage() {
   // Sample document data
@@ -76,7 +77,9 @@ export default function DocumentSummaryPage() {
                                 <FileText className="h-5 w-5 text-primary" />
                               </div>
                               <div>
-                                <h3 className="font-medium">{doc.title}</h3>
+                                <Link href={`/document-summary/${doc.id}`} className="font-medium hover:text-primary">
+                                  {doc.title}
+                                </Link>
                                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
                                   <span>원본: {doc.originalSize}</span>
                                   <span>요약: {doc.summarySize}</span>
@@ -88,6 +91,11 @@ export default function DocumentSummaryPage() {
                                 <Clock className="h-3.5 w-3.5 mr-1" />
                                 {doc.date}
                               </div>
+                              <Button variant="ghost" size="icon" className="text-muted-foreground">
+                                <Link href={`/document-summary/${doc.id}`}>
+                                  <Play className="h-4 w-4" />
+                                </Link>
+                              </Button>
                               <Button variant="ghost" size="icon" className="text-muted-foreground">
                                 <Download className="h-4 w-4" />
                               </Button>
@@ -121,44 +129,14 @@ export default function DocumentSummaryPage() {
                     <p className="text-muted-foreground mb-6">
                       PDF, Word, Excel, PowerPoint 파일을 업로드하여 AI로 요약해보세요.
                     </p>
-                    <Button className="w-full mb-4">문서 업로드</Button>
+                    <Button className="w-full mb-4" asChild>
+                      <Link href="/document-summary/upload">문서 업로드</Link>
+                    </Button>
                     <p className="text-xs text-muted-foreground">
                       최대 파일 크기: 20MB
                       <br />
                       지원 형식: PDF, DOCX, XLSX, PPTX
                     </p>
-                  </div>
-
-                  <div className="mt-8 pt-8 border-t">
-                    <h3 className="font-medium mb-4">요약 옵션</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="text-sm font-medium mb-1.5 block">요약 길이</label>
-                        <select className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
-                          <option>짧게 (원본의 10%)</option>
-                          <option>중간 (원본의 20%)</option>
-                          <option>길게 (원본의 30%)</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium mb-1.5 block">요약 스타일</label>
-                        <select className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
-                          <option>일반</option>
-                          <option>학술적</option>
-                          <option>비즈니스</option>
-                        </select>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          type="checkbox"
-                          id="tts"
-                          className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                        />
-                        <label htmlFor="tts" className="ml-2 text-sm">
-                          TTS로 요약 듣기
-                        </label>
-                      </div>
-                    </div>
                   </div>
                 </CardContent>
               </Card>

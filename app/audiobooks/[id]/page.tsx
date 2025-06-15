@@ -38,29 +38,12 @@ export default function AudiobookDetailPage({ params }: { params: Promise<{ id: 
     title: "사피엔스",
     subtitle: "유인원에서 사이보그까지, 인간 역사의 대담한 역사",
     author: "유발 하라리",
-    narrator: "김태훈",
     coverImage: "/placeholder.svg?height=600&width=400",
     category: "역사",
-    rating: 4.8,
     duration: "12시간 23분",
     releaseDate: "2023-05-15",
     summary:
       "이 책은 인류의 역사를 다룬 책으로, 인간이 어떻게 지구상에서 가장 지배적인 종이 되었는지를 설명합니다. 저자는 인류의 역사를 인지혁명, 농업혁명, 과학혁명이라는 세 가지 혁명으로 나누어 설명하며, 각 혁명이 인류의 생활 방식과 사회 구조에 어떤 영향을 미쳤는지 분석합니다. 또한 인간이 어떻게 허구적인 이야기를 믿고 협력하게 되었는지, 그리고 그것이 어떻게 대규모 사회 조직과 문명의 발전으로 이어졌는지 설명합니다.",
-    chapters: [
-      { number: 1, title: "인지혁명", duration: "45분" },
-      { number: 2, title: "농업혁명", duration: "52분" },
-      { number: 3, title: "인류의 통합", duration: "48분" },
-      { number: 4, title: "과학혁명", duration: "56분" },
-      { number: 5, title: "자본주의의 신조", duration: "50분" },
-      { number: 6, title: "산업혁명", duration: "47분" },
-      { number: 7, title: "행복의 혁명", duration: "53분" },
-      { number: 8, title: "역사의 종말", duration: "42분" },
-    ],
-    reviews: [
-      { user: "독서광", rating: 5, comment: "인류 역사에 대한 새로운 시각을 제공하는 놀라운 책입니다." },
-      { user: "지식탐험가", rating: 4, comment: "흥미로운 관점으로 역사를 바라보게 해주는 책이에요." },
-      { user: "철학자", rating: 5, comment: "인간의 본질에 대해 깊이 생각하게 만드는 책입니다." },
-    ],
   }
 
   return (
@@ -88,12 +71,6 @@ export default function AudiobookDetailPage({ params }: { params: Promise<{ id: 
                 </div>
               </div>
 
-              <div className="flex items-center gap-1 text-amber-500">
-                <Star className="h-5 w-5 fill-amber-500" />
-                <span className="font-medium">{book.rating}</span>
-                <span className="text-sm text-muted-foreground ml-1">({book.reviews.length} 리뷰)</span>
-              </div>
-
               <div className="space-y-2 text-sm">
                 <div className="flex items-start gap-2">
                   <Clock className="h-4 w-4 mt-0.5 text-muted-foreground" />
@@ -102,19 +79,9 @@ export default function AudiobookDetailPage({ params }: { params: Promise<{ id: 
                     <p className="text-muted-foreground">{book.duration}</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-2">
-                  <BookOpen className="h-4 w-4 mt-0.5 text-muted-foreground" />
-                  <div>
-                    <p className="font-medium">챕터</p>
-                    <p className="text-muted-foreground">{book.chapters.length}개</p>
-                  </div>
-                </div>
               </div>
 
               <Button className="w-full">오디오북 재생하기</Button>
-              <Button variant="outline" className="w-full">
-                내 서재에 추가
-              </Button>
             </div>
 
             {/* Book details */}
@@ -122,67 +89,17 @@ export default function AudiobookDetailPage({ params }: { params: Promise<{ id: 
               <h1 className="text-3xl font-bold mb-1">{book.title}</h1>
               <p className="text-lg text-muted-foreground mb-4">{book.subtitle}</p>
               <p className="mb-6">
-                <span className="font-medium">저자:</span> {book.author} |
-                <span className="font-medium ml-2">낭독:</span> {book.narrator}
+                <span className="font-medium">저자:</span> {book.author}
               </p>
 
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                 <TabsList className="mb-4">
                   <TabsTrigger value="summary">책 소개</TabsTrigger>
-                  <TabsTrigger value="chapters">챕터</TabsTrigger>
-                  <TabsTrigger value="reviews">리뷰</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="summary" className="mt-0">
                   <div className="prose dark:prose-invert max-w-none">
                     <p>{book.summary}</p>
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="chapters" className="mt-0">
-                  <div className="space-y-3">
-                    {book.chapters.map((chapter) => (
-                      <div
-                        key={chapter.number}
-                        className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-medium">
-                            {chapter.number}
-                          </div>
-                          <div>
-                            <p className="font-medium">{chapter.title}</p>
-                            <p className="text-sm text-muted-foreground">{chapter.duration}</p>
-                          </div>
-                        </div>
-                        <Button variant="ghost" size="icon">
-                          <Play className="h-5 w-5" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="reviews" className="mt-0">
-                  <div className="space-y-4">
-                    {book.reviews.map((review, index) => (
-                      <div key={index} className="p-4 rounded-lg border">
-                        <div className="flex items-center justify-between mb-2">
-                          <p className="font-medium">{review.user}</p>
-                          <div className="flex items-center">
-                            {Array.from({ length: 5 }).map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`h-4 w-4 ${
-                                  i < review.rating ? "fill-amber-500 text-amber-500" : "text-gray-300"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                        <p className="text-muted-foreground">{review.comment}</p>
-                      </div>
-                    ))}
                   </div>
                 </TabsContent>
               </Tabs>
